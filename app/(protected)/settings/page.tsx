@@ -3,7 +3,7 @@
 import * as z from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useTransition, useState } from 'react';
+import { useTransition, useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 
 import { SettingsSchema } from '@/schemas';
@@ -32,9 +32,10 @@ import {
 } from '@/components/ui/select';
 import { UserRole } from '@prisma/client';
 import { Switch } from '@/components/ui/switch';
+import { BeatLoader } from 'react-spinners';
 
 const SettingsPage = () => {
-  const user = useCurrentUser();
+  const { user, loading } = useCurrentUser();
 
   const [error, setError] = useState<string | undefined>();
   const [success, setSuccess] = useState<string | undefined>();
@@ -44,14 +45,27 @@ const SettingsPage = () => {
   const form = useForm<z.infer<typeof SettingsSchema>>({
     resolver: zodResolver(SettingsSchema),
     defaultValues: {
-      name: user?.name || undefined,
-      email: user?.email || undefined,
+      name: '',
+      email: '',
       password: undefined,
       newPassword: undefined,
-      role: user?.role || undefined,
-      isTwoFactorEnabled: user?.isTwoFactorEnabled || undefined,
+      role: UserRole.USER,
+      isTwoFactorEnabled: false,
     },
   });
+
+  useEffect(() => {
+    if (user) {
+      form.reset({
+        name: user?.name || undefined,
+        email: user?.email || undefined,
+        password: undefined,
+        newPassword: undefined,
+        role: user?.role || undefined,
+        isTwoFactorEnabled: user?.isTwoFactorEnabled || undefined,
+      });
+    }
+  }, [user, form]);
 
   const onSubmit = (values: z.infer<typeof SettingsSchema>) => {
     startTransition(() => {
@@ -69,6 +83,15 @@ const SettingsPage = () => {
         .catch(() => setError('Something went wrong!'));
     });
   };
+
+  if (loading) {
+    return (
+      <Card className="max-w-[600px] w-full flex flex-col p-4 gap-2 items-center justify-center">
+        <p className="text-muted-foreground text-sm">Carregando...</p>
+        <BeatLoader />
+      </Card>
+    );
+  }
 
   return (
     <Card className="max-w-[600px] w-full">
@@ -163,7 +186,7 @@ const SettingsPage = () => {
                     <Select
                       disabled={isPending}
                       onValueChange={field.onChange}
-                      defaultValue={field.value}
+                      value={field.value}
                     >
                       <FormControl>
                         <SelectTrigger>
