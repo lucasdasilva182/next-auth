@@ -11,9 +11,14 @@ import {
 import { useCurrentUser } from '@/hooks/use-current-user';
 import { LogoutButton } from '@/components/auth/logout-button';
 import { LogOut } from 'lucide-react';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export const UserButton = () => {
-  const user = useCurrentUser();
+  const { user, loading } = useCurrentUser();
+
+  if (loading) {
+    return <Skeleton className="bg-[#0003] h-12 w-12 rounded-full" />;
+  }
 
   return (
     <DropdownMenu>
