@@ -1,5 +1,4 @@
 
-
 # **Next Auth Toolkit 🔐**
 
 Este projeto é um sistema completo de autenticação construído com **Next.js**, **Prisma** e **PostgreSQL**, seguindo as práticas mais recentes do **Next Auth v5 (Auth.js)**.
@@ -7,10 +6,15 @@ Este projeto é um sistema completo de autenticação construído com **Next.js*
 ### Funcionalidades
 
 ✅ **Autenticação com credenciais** (e-mail e senha)  
+
 ✅ **Login via OAuth** (Google e GitHub)  
+
 ✅ **Autenticação de dois fatores (2FA)**  
+
 ✅ **Recuperação de senha**  
+
 ✅ **Verificação de e-mail**  
+
 ✅ **Gerenciamento seguro de sessões**
 
 <br/>
