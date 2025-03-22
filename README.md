@@ -44,7 +44,7 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 
 1. Clone o repositório:
    ```bash
-   git clone https://github.com/lucasdasilva182/barberApp.git
+   git clone https://github.com/lucasdasilva182/next-auth.git
    ```
 
 2. Instale as dependências:
