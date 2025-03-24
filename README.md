@@ -53,7 +53,7 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 
 2. Instale as dependências:
    ```bash
-   cd barberApp
+   cd next-auth
    npm install
    ```
 
